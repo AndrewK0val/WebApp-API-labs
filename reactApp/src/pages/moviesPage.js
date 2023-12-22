@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { getMovies } from "../api/movie-api";
+import { getMovies } from "../api/movies-api";
 
 const MoviesPage = () => {
     const { data, error, isLoading, isError } = useQuery('discover', getMovies)
