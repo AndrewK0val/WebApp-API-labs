@@ -1,5 +1,6 @@
 import express from 'express';
 import User from './userModel';
+import asyncHandler from 'express-async-handler';
 
 const router = express.Router(); // eslint-disable-line
 
@@ -8,8 +9,9 @@ router.get('/', async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
 });
+
 // register(Create)/Authenticate User
-router.post('/', async (req, res) => {
+router.post('/', asyncHandler(async (req, res) => {
     if (req.query.action === 'register') {  //if action is 'register' then save to DB
         await User(req.body).save();
         res.status(201).json({
@@ -25,7 +27,7 @@ router.post('/', async (req, res) => {
             return res.status(200).json({ code: 200, msg: "Authentication Successful", token: 'TEMPORARY_TOKEN' });
         }
     }
-});
+}));
 
 // Update a user
 router.put('/:id', async (req, res) => {
